@@ -53,7 +53,6 @@ exports.writeSearchResults = function (query, cb) {
     if (err) return cb(err);
     console.log('data: ', data);
 
-
     exports.write1(data, cb);
     cb(null, data);
   });

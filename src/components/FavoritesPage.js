@@ -16,7 +16,7 @@ export default class FavoritesPage extends Component {
   }
 
   componentWillMount () {
-    SearchActions.fdoetchFavorites();
+    SearchActions.fetchFavorites();
     SearchStore.startListening(this._onChange);
   }
 
