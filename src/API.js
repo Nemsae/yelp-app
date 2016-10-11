@@ -1,4 +1,4 @@
-import axios, { get, post, put } from 'axios';
+import axios, { get, post, put, delete } from 'axios';
 import ServerActions from './actions/ServerActions';
 
 const API = {
@@ -24,6 +24,40 @@ const API = {
       .catch((err) => {
         console.log('Error! API.receiveBusinessResult: ', err);
       });
+  },
+
+  postFavoriteBusiness (business) {
+    console.log('business in API: ', business);
+    post('/yelp', business)
+      .then((res) => {
+        ServerActions.sendFavorites(res);
+      })
+      .catch((err) => {
+        console.log('Error! API.postFavoriteBusiness: ', err);
+      });
+  },
+
+  receiveFavorites () {
+    get('/yelp/favorites')
+      .then((res) => {
+        console.log('res in API for favorites: ', res.data);
+        ServerActions.sendFavorites(res.data);
+      })
+      .catch((err) => {
+        console.log('Error! API.receiveFavorites: ', err);
+      });
+  },
+
+  removeFavorite (favorite) {
+    console.log('favorite LAST: ', favorite);
+    axios.delete(`/yelp/delete/${favorite.id}`, favorite.id)
+    .then((res) => {
+      console.log('res in API for favorites: ', res);
+      ServerActions.sendFavorites(res.data);
+    })
+    .catch((err) => {
+      console.log('Error! API.removeFavorite: ', err);
+    });
   }
   // recieveCards () {
   //   get('/flashcards/')

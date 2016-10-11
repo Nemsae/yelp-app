@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 // import SearchTable from './SearchTable';
 // import SearchForm from './SearchForm';
 import SearchStore from '../stores/SearchStore';
+import SearchActions from '../actions/SearchActions';
 
 export default class BusinessPage extends Component {
   constructor () {
@@ -13,6 +14,7 @@ export default class BusinessPage extends Component {
     };
 
     this._onChange = this._onChange.bind(this);
+    this._addFavorite = this._addFavorite.bind(this);
   }
 
   componentWillMount () {
@@ -28,6 +30,12 @@ export default class BusinessPage extends Component {
       business: SearchStore.getBusinessResult()
     });
   }
+
+  _addFavorite (business) {
+    console.log('business2: ', business);
+    SearchActions.postFavorite(business);
+  }
+
   render () {
     let { business } = this.state;
     let Business = [];
@@ -37,20 +45,18 @@ export default class BusinessPage extends Component {
           <h1>{business.name}</h1>
           <h4>{business.phone}</h4>
           <img src={business.rating_img_url} />
-          <h4>{business.rating}</h4>
-          {/* <h3>{business.location.address[0]}</h3> */}
+          <h4>{business.rating} out of 5 stars</h4>
+          <h3>{business.location.address[0]}</h3>
           <h3>{business.location.city}</h3>
           <h3>{business.location.state_code}, {business.location.postal_code}</h3>
+          <button onClick={this._addFavorite.bind(null, business)} className='btn btn-default'>Favorite!</button>
         </div>
       );
     }
     console.log('business: ', business);
     return (
       <div className='text-center'>
-        <h1>Business Page</h1>
-        <div>
-          {Business}
-        </div>
+        {Business}
       </div>
     );
   }

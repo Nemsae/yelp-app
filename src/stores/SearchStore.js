@@ -3,6 +3,7 @@ import AppDispatcher from '../AppDispatcher';
 
 let _searchResults = undefined;
 let _businessResult = undefined;
+let _favorites = undefined;
 
 class SearchStore extends EventEmitter {
   constructor () {
@@ -19,6 +20,12 @@ class SearchStore extends EventEmitter {
         }
         case 'RECEIVE_BUSINESS_RESULT': {
           _businessResult = payload.result;
+          this.emit('CHANGE');
+          break;
+        }
+        case 'RECEIVE_FAVORITES': {
+          _favorites = payload.favorites;
+          console.log('_favorites in store: ', _favorites);
           this.emit('CHANGE');
           break;
         }
@@ -40,6 +47,10 @@ class SearchStore extends EventEmitter {
 
   getBusinessResult () {
     return _businessResult;
+  }
+
+  getFavorites () {
+    return _favorites;
   }
 }
 

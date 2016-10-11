@@ -14,6 +14,13 @@ const ServerActions = {
       type: 'RECEIVE_BUSINESS_RESULT',
       payload: { result }
     });
+  },
+
+  sendFavorites (favorites) {
+    AppDispatcher.dispatch({
+      type: 'RECEIVE_FAVORITES',
+      payload: { favorites }
+    });
   }
 };
 
